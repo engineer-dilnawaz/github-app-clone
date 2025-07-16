@@ -11,6 +11,13 @@ export default function TabsLayout() {
   const theme = useAppTheme();
   const styles = useStyles(theme);
 
+  // if (__DEV__) {
+  //   const whyDidYouRender = require("@welldone-software/why-did-you-render");
+  //   whyDidYouRender(React, {
+  //     trackAllPureComponents: true,
+  //   });
+  // }
+
   const memoizedStyles = useMemo(() => {
     return {
       headerStyle: styles.headerStyle,
