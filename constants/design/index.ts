@@ -15,3 +15,5 @@ export const radius = {
   xl: 16,
   full: 999,
 } as const;
+
+export const HEADER_HEIGHT = 56;

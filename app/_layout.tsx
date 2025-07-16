@@ -1,7 +1,7 @@
 import { useFonts } from "expo-font";
 import { Slot, SplashScreen } from "expo-router";
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import {
   configureFonts,
   DefaultTheme,
@@ -25,9 +25,9 @@ export default function AppLayout() {
     "Inter-Medium": require("../assets/fonts/Inter_18pt-Medium.ttf"),
   });
 
-  useEffect(() => {
-    if (systemColorScheme) setTheme(systemColorScheme);
-  }, [systemColorScheme]);
+  // useEffect(() => {
+  //   if (systemColorScheme) setTheme(systemColorScheme);
+  // }, [systemColorScheme]);
 
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync();
@@ -47,6 +47,10 @@ export default function AppLayout() {
       <AuthProvider>
         <Slot />
       </AuthProvider>
+
+      <StatusBar
+        barStyle={mode === "dark" ? "light-content" : "light-content"}
+      />
     </PaperProvider>
   );
 }
