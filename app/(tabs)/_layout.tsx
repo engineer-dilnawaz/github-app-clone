@@ -1,11 +1,12 @@
 import {
-  CustomTabBar,
   Header,
   HeaderRight,
   HeaderRightProps,
+  HomeHeaderRight,
   Icon,
 } from "@/components";
 import { useAppTheme } from "@/hooks/theme-hooks/useAppTheme";
+import { useThemeStore } from "@/store/zustand/theme";
 import { AppTheme } from "@/types";
 import { HPX } from "@/utils";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
@@ -17,6 +18,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function TabsLayout() {
   const theme = useAppTheme();
   const styles = useStyles(theme);
+  const { mode } = useThemeStore();
+  const safeAreaInsets = useSafeAreaInsets();
 
   // if (__DEV__) {
   //   const whyDidYouRender = require("@welldone-software/why-did-you-render");
@@ -54,8 +57,9 @@ export default function TabsLayout() {
         // header,
         // headerRight,
         headerTitleAlign: "left",
+        headerTransparent: true,
         // headerLeft: () => <Text>lop</Text>,
-        headerShadowVisible: true,
+        // headerShadowVisible: true,
 
         // tabBarVisibilityAnimationConfig: {
         //   show: {
@@ -71,31 +75,34 @@ export default function TabsLayout() {
         // },
         sceneStyle: {
           flex: 1,
+          paddingTop: safeAreaInsets.top + 40,
           backgroundColor: theme.colors.background,
+          paddingHorizontal: theme.spacing.lg,
         },
       }}
-      tabBar={(props) => <CustomTabBar {...props} />}
     >
       <Tabs.Screen
         name="home"
         options={{
           title: "Home",
           // headerRight,
-          headerTintColor: theme.colors.onSurface,
+          headerTintColor: theme.colors.primary,
+
           headerStyle: {
             backgroundColor: theme.colors.background,
           },
 
-          headerSearchBarOptions: {
-            placeholder: "Search something...",
-            autoCapitalize: "none",
-            autoFocus: false,
-            // obscureBackground:true,
+          headerRight: (props) => <HomeHeaderRight {...props} />,
+          // headerSearchBarOptions: {
+          //   placeholder: "Search something...",
+          //   autoCapitalize: "none",
+          //   autoFocus: false,
+          //   // obscureBackground:true,
 
-            // hideWhenScrolling: false,
-            // barTintColor: theme.colors.elevation.level2, // Background of search bar
-            // tintColor: theme.colors.onSurface,           //
-          },
+          //   // hideWhenScrolling: false,
+          //   // barTintColor: theme.colors.elevation.level2, // Background of search bar
+          //   // tintColor: theme.colors.onSurface,           //
+          // },
 
           tabBarIcon: (props) => (
             <Icon
@@ -167,13 +174,25 @@ const useStyles = (theme: AppTheme) => {
     },
     tabBarStyle: {
       backgroundColor: theme.colors.background,
-      borderTopColor: theme.colors.outline,
+      // borderTopColor: theme.colors.outline,
       height: HPX(70),
       marginHorizontal: theme.spacing.lg,
       position: "absolute",
       bottom: safeAreaInsets.bottom + theme.spacing.sm,
       zIndex: 999,
       borderRadius: theme.radius.full,
+      shadowColor: theme.colors.onSurface,
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.23,
+      shadowRadius: 8.62,
+
+      elevation: 4,
+
+      borderWidth: 1,
+      borderColor: theme.colors.surface,
     },
     tabBarLabelStyle: {},
     tabBarItemStyle: {

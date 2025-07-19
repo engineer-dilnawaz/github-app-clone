@@ -49,7 +49,7 @@ export default function AppLayout() {
       </AuthProvider>
 
       <StatusBar
-        barStyle={mode === "dark" ? "light-content" : "light-content"}
+        barStyle={mode === "dark" ? "light-content" : "dark-content"}
       />
     </PaperProvider>
   );
