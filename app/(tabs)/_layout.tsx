@@ -117,7 +117,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
-          title: "Notification",
+          title: "Notifications",
           tabBarLabel: "Notification",
           tabBarIcon: (props) => (
             <Icon
