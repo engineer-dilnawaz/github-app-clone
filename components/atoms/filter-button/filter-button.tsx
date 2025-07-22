@@ -1,34 +1,67 @@
+import { FC, useEffect } from "react";
+import { Pressable, StyleSheet } from "react-native";
+import { Text } from "react-native-paper";
+
+import { DESIGN } from "@/constants";
 import { useAppTheme } from "@/hooks/theme-hooks/useAppTheme";
 import { HPX } from "@/utils";
-import { FC } from "react";
-import { StyleSheet } from "react-native";
-import { Button, Text } from "react-native-paper";
-import type { IconSource } from "react-native-paper/lib/typescript/components/Icon";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { Icon } from "../icon";
 
 type FilterButtonProps = {
-  icon?: IconSource;
+  showIcon?: boolean;
   onPress?: () => void;
   label: string;
+  isFilterSelected: boolean;
 };
 
-const FilterButton: FC<FilterButtonProps> = ({ icon, onPress, label }) => {
+const FilterButton: FC<FilterButtonProps> = ({
+  isFilterSelected,
+  showIcon,
+  onPress,
+  label,
+}) => {
   const theme = useAppTheme();
   const styles = useStyles();
+
+  const animation = useSharedValue(isFilterSelected ? 1 : 0);
+
+  useEffect(() => {
+    animation.value = withTiming(isFilterSelected ? 1 : 0, { duration: 250 });
+  }, [isFilterSelected]);
+
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      animation.value,
+      [0, 1],
+      [theme.colors.surfaceDisabled, theme.colors.primary]
+    ),
+  }));
+
   return (
-    <Button
-      mode="contained"
-      icon={icon}
-      buttonColor={theme.colors.onSurfaceDisabled}
-      compact
-      // container
-      textColor={theme.colors.onBackground}
-      style={styles.style}
-      contentStyle={styles.contentStyle}
-      labelStyle={!!icon && styles.labelStyle}
-      onPress={onPress}
-    >
-      <Text variant="bodyMedium">{label}</Text>
-    </Button>
+    <Pressable onPress={onPress}>
+      <Animated.View style={[styles.container, animatedContainerStyle]}>
+        <Text
+          variant="labelMedium"
+          style={[styles.label, isFilterSelected && styles.activeFilterColor]}
+        >
+          {label}
+        </Text>
+        {showIcon ? (
+          <Icon
+            type="MaterialCommunityIcons"
+            name="chevron-down"
+            color={theme.colors.onBackground}
+            size={HPX(18)}
+          />
+        ) : null}
+      </Animated.View>
+    </Pressable>
   );
 };
 
@@ -38,14 +71,23 @@ const useStyles = () => {
   const theme = useAppTheme();
 
   return StyleSheet.create({
-    style: {},
-    contentStyle: {
-      flexDirection: "row-reverse",
-      height: 35,
+    container: {
+      paddingHorizontal: DESIGN.SPACE.HORIZONTAL.SPACING_10,
+      backgroundColor: theme.colors.surfaceDisabled,
+      borderRadius: DESIGN.BORDER_RADIUS.CORNER_RADIUS_100,
+      height: HPX(30),
+      flexDirection: "row",
+      alignItems: "center",
     },
-    labelStyle: {
-      marginRight: 0,
-      marginLeft: HPX(10),
+    activeFilterBg: {
+      backgroundColor: theme.colors.primary,
+    },
+    label: {
+      lineHeight: 14,
+      color: theme.colors.onSurface,
+    },
+    activeFilterColor: {
+      color: theme.colors.onPrimary,
     },
   });
 };
