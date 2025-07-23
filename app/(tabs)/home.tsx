@@ -146,7 +146,7 @@ const useStyles = () => {
     },
     addFavBtn: {
       marginTop: theme.spacing.lg,
-      backgroundColor: theme.colors.inverseSurface,
+      backgroundColor: theme.colors.onBackground,
       justifyContent: "center",
       alignItems: "center",
       paddingVertical: theme.spacing.sm,
@@ -156,7 +156,7 @@ const useStyles = () => {
       marginBottom: theme.spacing.xl,
     },
     addFavBtnText: {
-      color: theme.colors.inversePrimary,
+      color: theme.colors.background,
       textTransform: "uppercase",
     },
     contentContainer: {

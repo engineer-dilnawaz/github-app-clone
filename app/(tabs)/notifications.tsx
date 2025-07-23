@@ -143,7 +143,8 @@ const useStyles = () => {
       justifyContent: "space-between",
     },
     noDataContainer: {
-      flex: 1,
+      flex: 0.7,
+
       justifyContent: "center",
       alignItems: "center",
       gap: theme.spacing.lg,
