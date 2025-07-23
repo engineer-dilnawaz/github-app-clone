@@ -179,7 +179,7 @@ const useStyles = (theme: AppTheme) => {
       marginHorizontal: theme.spacing.lg,
       position: "absolute",
       bottom: safeAreaInsets.bottom + theme.spacing.sm,
-      zIndex: 999,
+      zIndex: 1,
       borderRadius: theme.radius.full,
       shadowColor: theme.colors.onSurface,
       shadowOffset: {

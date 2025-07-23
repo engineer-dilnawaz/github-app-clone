@@ -8,6 +8,8 @@ import {
   PaperProvider,
 } from "react-native-paper";
 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import { interFontConfig, theme } from "@/constants";
 import { AuthProvider } from "@/store/context";
 import { useThemeStore } from "@/store/zustand/theme";
@@ -43,14 +45,16 @@ export default function AppLayout() {
   };
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <AuthProvider>
-        <Slot />
-      </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PaperProvider theme={paperTheme}>
+        <AuthProvider>
+          <Slot />
+        </AuthProvider>
 
-      <StatusBar
-        barStyle={mode === "dark" ? "light-content" : "dark-content"}
-      />
-    </PaperProvider>
+        <StatusBar
+          barStyle={mode === "dark" ? "light-content" : "dark-content"}
+        />
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }
