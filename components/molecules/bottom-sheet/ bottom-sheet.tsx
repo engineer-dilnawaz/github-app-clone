@@ -21,15 +21,29 @@ type BottomSheetCompProps = {
   children: ReactElement<BottomSheetViewProps, typeof BottomSheetView>;
 } & Omit<BottomSheetProps, "children">;
 
-const BottomSheetComp = forwardRef<BottomSheet, BottomSheetCompProps>(
+export type AppBottomSheetRef = {
+  snapToIndex: (index: number) => void;
+  close: () => void;
+  expand: () => void;
+};
+
+const BottomSheetComp = forwardRef<AppBottomSheetRef, BottomSheetCompProps>(
   (props, ref) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const { mode } = useThemeStore();
     const theme = useAppTheme();
 
-    useImperativeHandle(ref, () => bottomSheetRef.current as BottomSheet, []);
+    useImperativeHandle(
+      ref,
+      () => ({
+        snapToIndex: (index: number) =>
+          bottomSheetRef.current?.snapToIndex(index),
+        close: () => bottomSheetRef.current?.close(),
+        expand: () => bottomSheetRef.current?.expand(),
+      }),
+      []
+    );
 
-    console.log("app sheesssssst");
     return (
       <Portal>
         <BottomSheet

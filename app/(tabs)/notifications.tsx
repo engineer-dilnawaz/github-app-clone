@@ -102,7 +102,6 @@ const Notifications = () => {
   };
 
   const handleSheetOpen = () => {
-    console.log("first");
     bottomSheetRef.current?.snapToIndex(0);
   };
 
